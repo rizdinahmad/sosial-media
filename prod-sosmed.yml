@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: pb-secret-production
+  name: pb-secret
   namespace: production
 type: Opaque
 data:
@@ -54,17 +54,17 @@ spec:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: pb-secret-production
+                  name: pb-secret
                   key: host
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: pb-secret-production
+                  name: pb-secret
                   key: username
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: pb-secret-production
+                  name: pb-secret
                   key: password
 
 ---
@@ -78,7 +78,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: sosmedmacross.rizdin.online
+  - host: sosmed.rizdin.online
     http:
       paths:
       #- path: /
