@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pb-secret-production
+  namespace: production
+type: Opaque
+data:
+  host: cGVzYnVrLmN2cXd2dWxod2ZyNC5hcC1ub3J0aGVhc3QtMi5yZHMuYW1hem9uYXdzLmNvbQ==
+  username: YWRtaW4=
+  password: YWRtaW5wZXNidWttYWNyb3Nz
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: pesbuk-service
+  namespace: production
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  #type: LoadBalancer
+  selector:
+    app: php-pesbuk
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pesbuk-deployment
+  namespace: production
+  labels:
+    app: php-pesbuk
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: php-pesbuk
+      track: stable
+  template:
+    metadata:
+      labels:
+        app: php-pesbuk
+        track: stable
+    spec:
+      containers:
+      - name: php-pesbuk
+        image: 25092018/sosial-media:macross
+        ports:
+        - containerPort: 80
+        env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: pb-secret-production
+                  key: host
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: pb-secret-production
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: pb-secret-production
+                  key: password
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: pesbuk-ingress
+  namespace: production
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: sosmedmacross.rizdin.online
+    http:
+      paths:
+      #- path: /
+      - backend:
+          serviceName: pesbuk-service
+          servicePort: 80
