@@ -2,7 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: pesbuk-service
-  namespace: production
+#  namespace: production
 spec:
   ports:
   - port: 80
@@ -17,7 +17,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: pesbuk-deployment
-  namespace: production
+#  namespace: production
   labels:
     app: php-pesbuk
 spec:
@@ -60,7 +60,7 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: pesbuk-ingress
-  namespace: production
+#  namespace: production
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
