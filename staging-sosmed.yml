@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: pesbuk-service
+  name: sosmed-service
   namespace: staging
 spec:
   ports:
@@ -16,7 +16,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pesbuk-deployment
+  name: sosmed-deployment
   namespace: staging
   labels:
     app: php-pesbuk
@@ -34,32 +34,32 @@ spec:
     spec:
       containers:
       - name: php-pesbuk
-        image: 25092018/sosial-media:macross
+        image: 25092018/sosial-media:latest
         ports:
         - containerPort: 80
         env:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: pb-secret
-                  key: host
+                  name: secret
+                  key: pb_db_host
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: pb-secret
-                  key: username
+                  name: secret
+                  key: pb_db_user
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: pb-secret
-                  key: password
+                  name: secret
+                  key: pb_db_pass
 
 ---
 
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: pesbuk-ingress
+  name: sosmed-ingress
   namespace: staging
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
@@ -70,5 +70,5 @@ spec:
       paths:
       #- path: /
       - backend:
-          serviceName: pesbuk-service
+          serviceName: sosmed-service
           servicePort: 80
