@@ -42,17 +42,22 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: secret
-                  key: pb_db_host
+                  key: pb_host
             - name: pb_db_user
               valueFrom:
                 secretKeyRef:
                   name: secret
-                  key: pb_db_user
+                  key: pb_user
             - name: pb_db_pass
               valueFrom:
                 secretKeyRef:
                   name: secret
-                  key: pb_db_pass
+                  key: pb_pass
+            - name: pb_db_name
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: pb_name
 
 ---
 
