@@ -38,17 +38,17 @@ spec:
         ports:
         - containerPort: 80
         env:
-            - name: DB_HOST
+            - name: db_host
               valueFrom:
                 secretKeyRef:
                   name: secret
                   key: pb_db_host
-            - name: DB_USER
+            - name: db_user
               valueFrom:
                 secretKeyRef:
                   name: secret
                   key: pb_db_user
-            - name: DB_PASS
+            - name: db_pass
               valueFrom:
                 secretKeyRef:
                   name: secret
