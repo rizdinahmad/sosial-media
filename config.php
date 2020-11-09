@@ -3,7 +3,7 @@
 $db_host = getenv ("pb_db_host");
 $db_user = getenv ("pb_db_user");
 $db_pass = getenv ("pb_db_pass");
-$db_name = "sosmed");
+$db_name = "sosmed";
 
 try {    
     //create PDO connection 
