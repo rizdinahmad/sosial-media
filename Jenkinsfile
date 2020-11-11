@@ -1,5 +1,5 @@
 env.DOCKER_REGISTRY = '25092018'
-env.DOCKER_IMAGE_NAME = 'stgsosmed'
+env.DOCKER_IMAGE_NAME = 'stgsosial-media'
 pipeline {
     agent any
     stages {
