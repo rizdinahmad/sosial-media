@@ -4,19 +4,19 @@ pipeline {
 	stage("build") {
 	    
 	    steps {
-		echo "boooos"
+		sh "docker build --build-arg APP_NAME=$DOCKER_IMAGE_NAME -t $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER ."
 	    }
 	}
 	stage("push") {
 	     
 	    steps {
-	     	echo "yoooo"
+	     	sh "docker push $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER"
 	    }
 	}
 	stage("deploy") {
 	     
 	     steps {
-		echo "run"
+		sh('kubectl apply -f staging-sosmed.yml')
 	     }
 	 }
     }
