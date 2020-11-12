@@ -1,3 +1,6 @@
+env.DOCKER_REGISTRY = '25092018'
+env.DOCKER_IMAGE_NAME = 'stgsosmed'
+
 pipeline {
      agent any
      stages {
@@ -16,8 +19,22 @@ pipeline {
 	stage("deploy") {
 	     
 	     steps {
-		sh('kubectl apply -f staging-sosmed.yml')
+		sh('sed -i "s/@/$BUILD_NUMBER/g" staging-sosmed.yml')
+                sh('kubectl apply -f staging-sosmed.yml')
+                sh('kubectl apply -f staging-sosmed.yml')
 	     }
 	 }
-    }
+	 stage ('Remove Image') {
+             
+             steps {
+                sh "docker rmi $DOCKER_REGISTRY/$DOCKER_IMAGE_NAME:$BUILD_NUMBER"
+            }
+        }
+	stage('Ingress') {
+             
+             steps {
+                sh "kubectl get ingress -n staging"
+             }
+        }
+     }
 }
