@@ -20,7 +20,7 @@ pipeline {
 	     
 	     steps {
 		sh('sed -i "s/@/$BUILD_NUMBER/g" staging-sosmed.yml')
-                sh('kubectl apply -f staging-sosmed.yml')
+                sh('kubectl delete -f staging-sosmed.yml')
                 sh('kubectl apply -f staging-sosmed.yml')
 	     }
 	 }
