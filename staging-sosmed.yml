@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: php-pesbuk
-        image: 25092018/stgsosial-media:@
+        image: 25092018/stgsosmed:@
         ports:
         - containerPort: 80
         env:
